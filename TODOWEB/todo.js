@@ -3,7 +3,9 @@ const toDoInput = document.querySelector("#todo-form input");
 const toDoList = document.querySelector("#todo-list");
 
 function deleteToDo() {
-    console.log("delete funtcion");
+    console.log(event.target.parentElement);
+    const li = event.target.parentElement;
+    li.remove();
 }
 
 function paintToDo(newTodo) {
