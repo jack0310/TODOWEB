@@ -10,17 +10,22 @@ function saveToDos() {
     localStorage.setItem(TODOS_KEY, JSON.stringify(toDos));
 }
 
-function deleteToDo() {
-    console.log(event.target.parentElement);
+function deleteToDo(event) {
     const li = event.target.parentElement;
+    //unction deleteFilter(toDo) {
+    //    return toDo.id !== parseInt(li.id);
+    //} 다른방식
     li.remove();
+    toDos = toDos.filter((toDo) => toDo.id !== parseInt(li.id));
+    saveToDos();
 }
 
-function paintToDo(newTodo) {
+function paintToDo(newTodoObj) {
     const li = document.createElement("li");
+    li.id = newTodoObj.id;
     const span = document.createElement("span");
     const button = document.createElement("button");
-    span.innerText = newTodo;
+    span.innerText = newTodoObj.text;
     button.innerText = "X";
     button.addEventListener("click", deleteToDo);
     li.appendChild(span);
@@ -32,8 +37,12 @@ function handleToDoSubmit(event) {
     event.preventDefault();
     const newTodo = toDoInput.value;
     toDoInput.value = "";
-    toDos.push(newTodo);
-    paintToDo(newTodo);
+    const newTodoObj = {
+        text: newTodo,
+        id: Date.now(),
+    };
+    toDos.push(newTodoObj);
+    paintToDo(newTodoObj);
     saveToDos();
 }
 
